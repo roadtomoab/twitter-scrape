@@ -1,8 +1,6 @@
 require('dotenv').config()
 const needle = require("needle")
 
-let followersCsv = []
-
 // change depending on id of account we want to grab followers from
 const userId = "1267191132200591362"
 const url = `https://api.twitter.com/2/users/${userId}/followers`;
@@ -41,11 +39,21 @@ async function getFollowers () {
         }
     }
 
-    console.log(followers)
-    console.log(`Retreived ${followers.length} users`)
+    // console.log(followers)
+    // console.log(`Retreived ${followers.length} users`)
 
     // convert to csv
-
+    let csvHeaders = Object.keys(followers[0])
+    let newArr = []
+    
+    newArr.push(csvHeaders)
+    
+    for (let i = 0; i < followers.length; i++) {
+      let follower = Object.values(followers[i])
+      newArr.push(follower)
+    }
+    
+    console.log(newArr.join("\n"))
 
 }
 
